@@ -2,4 +2,6 @@
     <string name="app_name">BasicPhoneApp</string>
     <string name="call">Call above number</string>
     <string name="input_phone_call">Input number you want to call</string>
+    <string name="input_number_sms">Input number you want to message</string>
+    <string name="sms">Send message</string>
 </resources>

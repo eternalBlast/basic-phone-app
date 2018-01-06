@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BasicPhoneApp</string>
+    <string name="call">Call above number</string>
+    <string name="input_phone_call">Input number you want to call</string>
+</resources>

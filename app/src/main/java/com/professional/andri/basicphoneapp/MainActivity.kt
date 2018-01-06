@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= 23) {
             return if (checkSelfPermission(android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                 Log.v("TAG", "Permission is granted")
-                val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneText!!.text.toString()))
+                val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneText.text.toString()))
                 startActivity(intent)
                 true
             } else {

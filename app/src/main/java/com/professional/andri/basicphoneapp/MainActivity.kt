@@ -2,29 +2,42 @@ package com.professional.andri.basicphoneapp
 
 import android.Manifest
 import android.content.Intent
-import android.net.Uri
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.widget.Button
-import android.widget.Toast
 import android.content.pm.PackageManager
-import android.Manifest.permission
-import android.Manifest.permission.CALL_PHONE
-import android.support.v4.app.ActivityCompat
+import android.net.Uri
 import android.os.Build
+import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 
 
 class MainActivity : AppCompatActivity() {
     private var callButton: Button? = null
+    private var smsButton: Button? = null
+    private lateinit var phoneText: EditText
+    private lateinit var smsText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //inflate
         callButton = findViewById(R.id.call_button) as Button
+        smsButton = findViewById(R.id.sms_button) as Button
+        phoneText = findViewById(R.id.phone_input) as EditText
+        smsText = findViewById(R.id.sms_input) as EditText
+
+        //listeners
         callButton!!.setOnClickListener{
             isPermissionGranted()
+        }
+
+        smsButton!!.setOnClickListener{
+            sendSMS()
         }
     }
 
@@ -32,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= 23) {
             return if (checkSelfPermission(android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                 Log.v("TAG", "Permission is granted")
-                val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "085275449512"))
+                val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneText!!.text.toString()))
                 startActivity(intent)
                 true
             } else {
@@ -64,5 +77,13 @@ class MainActivity : AppCompatActivity() {
             }
         }// other 'case' lines to check for other
         // permissions this app might request
+    }
+
+    fun sendSMS() {
+        val smsIntent = Intent(android.content.Intent.ACTION_VIEW)
+        smsIntent.type = "vnd.android-dir/mms-sms"
+        smsIntent.putExtra("address", phoneText.text.toString())
+        smsIntent.putExtra("sms_body", smsText.text.toString())
+        startActivity(smsIntent)
     }
 }
